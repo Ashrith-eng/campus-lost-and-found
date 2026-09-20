@@ -41,6 +41,83 @@
     <div id="results" class="card-grid"></div>
   </main>
 
+  <div id="postModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Post an item</h2>
+        <button id="closeModalBtn" type="button" class="close-btn">&times;</button>
+      </div>
+
+      <form id="postForm">
+        <div class="form-row">
+          <label>
+            Type
+            <select id="formType" required>
+              <option value="lost">Lost</option>
+              <option value="found">Found</option>
+            </select>
+          </label>
+          <label>
+            Category
+            <select id="formCategory" required>
+              <option value="" disabled selected>Select category</option>
+              <option value="electronics">Electronics</option>
+              <option value="documents">Documents</option>
+              <option value="keys">Keys</option>
+              <option value="clothing">Clothing</option>
+              <option value="books">Books</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Title
+          <input type="text" id="formTitle" required>
+        </label>
+
+        <label>
+          Description
+          <textarea id="formDescription" rows="3" required></textarea>
+        </label>
+
+        <div class="form-row">
+          <label>
+            Location
+            <input type="text" id="formLocation" required>
+          </label>
+          <label>
+            Date
+            <input type="date" id="formDate" required>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            Contact name
+            <input type="text" id="formContactName" required>
+          </label>
+          <label>
+            Contact info (email or phone)
+            <input type="text" id="formContactInfo" required>
+          </label>
+        </div>
+
+        <label>
+          Image URL (optional)
+          <input type="url" id="formImageUrl" placeholder="https://...">
+        </label>
+
+        <p id="formError" class="form-error hidden"></p>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelFormBtn">Cancel</button>
+          <button type="submit">Post item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>

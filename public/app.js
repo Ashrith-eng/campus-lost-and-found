@@ -4,6 +4,13 @@ const categoryFilterEl = document.getElementById('categoryFilter');
 const searchInputEl = document.getElementById('searchInput');
 const showClaimedEl = document.getElementById('showClaimed');
 
+const postItemBtn = document.getElementById('postItemBtn');
+const postModal = document.getElementById('postModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const cancelFormBtn = document.getElementById('cancelFormBtn');
+const postForm = document.getElementById('postForm');
+const formError = document.getElementById('formError');
+
 const filters = {
   type: '',
   category: '',
@@ -89,5 +96,56 @@ searchInputEl.addEventListener('input', () => {
 });
 
 showClaimedEl.addEventListener('change', loadItems);
+
+function openModal() {
+  formError.classList.add('hidden');
+  postForm.reset();
+  document.getElementById('formDate').value = new Date().toISOString().slice(0, 10);
+  postModal.classList.remove('hidden');
+}
+
+function closeModal() {
+  postModal.classList.add('hidden');
+}
+
+postItemBtn.addEventListener('click', openModal);
+closeModalBtn.addEventListener('click', closeModal);
+cancelFormBtn.addEventListener('click', closeModal);
+postModal.addEventListener('click', (event) => {
+  if (event.target === postModal) closeModal();
+});
+
+postForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  formError.classList.add('hidden');
+
+  const newItem = {
+    type: document.getElementById('formType').value,
+    title: document.getElementById('formTitle').value.trim(),
+    description: document.getElementById('formDescription').value.trim(),
+    category: document.getElementById('formCategory').value,
+    location: document.getElementById('formLocation').value.trim(),
+    date: document.getElementById('formDate').value,
+    contactName: document.getElementById('formContactName').value.trim(),
+    contactInfo: document.getElementById('formContactInfo').value.trim(),
+    imageUrl: document.getElementById('formImageUrl').value.trim() || null,
+  };
+
+  const response = await fetch('/api/items', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newItem),
+  });
+
+  if (!response.ok) {
+    const body = await response.json();
+    formError.textContent = body.error || 'Something went wrong. Please try again.';
+    formError.classList.remove('hidden');
+    return;
+  }
+
+  closeModal();
+  loadItems();
+});
 
 loadItems();
