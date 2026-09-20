@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f5f6f8;
+  color: #1f2430;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #2563eb;
+  color: white;
+}
+
+.site-header h1 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.site-header button {
+  background: white;
+  color: #2563eb;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+main {
+  padding: 1.5rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid transparent;
+}
+
+.card.lost {
+  border-left-color: #dc2626;
+}
+
+.card.found {
+  border-left-color: #16a34a;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: white;
+}
+
+.badge.lost {
+  background: #dc2626;
+}
+
+.badge.found {
+  background: #16a34a;
+}
+
+.category {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.card .meta {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.card .claim-btn {
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
