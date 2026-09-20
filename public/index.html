@@ -13,6 +13,31 @@
   </header>
 
   <main>
+    <div class="filter-bar">
+      <div class="type-toggle">
+        <button type="button" class="toggle-btn active" data-type="">All</button>
+        <button type="button" class="toggle-btn" data-type="lost">Lost</button>
+        <button type="button" class="toggle-btn" data-type="found">Found</button>
+      </div>
+
+      <select id="categoryFilter">
+        <option value="">All categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="documents">Documents</option>
+        <option value="keys">Keys</option>
+        <option value="clothing">Clothing</option>
+        <option value="books">Books</option>
+        <option value="other">Other</option>
+      </select>
+
+      <input type="text" id="searchInput" placeholder="Search title, description, location...">
+
+      <label class="checkbox-label">
+        <input type="checkbox" id="showClaimed">
+        Show claimed items
+      </label>
+    </div>
+
     <div id="results" class="card-grid"></div>
   </main>
 

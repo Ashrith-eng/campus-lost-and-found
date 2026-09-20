@@ -37,6 +37,67 @@ main {
   padding: 1.5rem;
 }
 
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.type-toggle {
+  display: flex;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  border: none;
+  background: white;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.toggle-btn + .toggle-btn {
+  border-left: 1px solid #d1d5db;
+}
+
+.toggle-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+.filter-bar select,
+.filter-bar input[type="text"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.filter-bar input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.empty-state {
+  text-align: center;
+  color: #6b7280;
+  padding: 3rem 1rem;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

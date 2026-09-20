@@ -1,4 +1,14 @@
 const resultsEl = document.getElementById('results');
+const typeToggleEl = document.querySelector('.type-toggle');
+const categoryFilterEl = document.getElementById('categoryFilter');
+const searchInputEl = document.getElementById('searchInput');
+const showClaimedEl = document.getElementById('showClaimed');
+
+const filters = {
+  type: '',
+  category: '',
+  q: '',
+};
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -14,6 +24,11 @@ function formatDate(isoDate) {
 
 function renderItems(items) {
   resultsEl.innerHTML = '';
+
+  if (items.length === 0) {
+    resultsEl.innerHTML = '<p class="empty-state">No items match your filters.</p>';
+    return;
+  }
 
   items.forEach((item) => {
     const card = document.createElement('article');
@@ -36,9 +51,43 @@ function renderItems(items) {
 }
 
 async function loadItems() {
-  const response = await fetch('/api/items');
+  const params = new URLSearchParams();
+
+  if (filters.type) params.set('type', filters.type);
+  if (filters.category) params.set('category', filters.category);
+  if (filters.q) params.set('q', filters.q);
+  if (!showClaimedEl.checked) params.set('status', 'open');
+
+  const response = await fetch(`/api/items?${params.toString()}`);
   const items = await response.json();
   renderItems(items);
 }
+
+typeToggleEl.addEventListener('click', (event) => {
+  const button = event.target.closest('.toggle-btn');
+  if (!button) return;
+
+  typeToggleEl.querySelectorAll('.toggle-btn').forEach((btn) => btn.classList.remove('active'));
+  button.classList.add('active');
+
+  filters.type = button.dataset.type;
+  loadItems();
+});
+
+categoryFilterEl.addEventListener('change', () => {
+  filters.category = categoryFilterEl.value;
+  loadItems();
+});
+
+let searchDebounce;
+searchInputEl.addEventListener('input', () => {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => {
+    filters.q = searchInputEl.value.trim();
+    loadItems();
+  }, 300);
+});
+
+showClaimedEl.addEventListener('change', loadItems);
 
 loadItems();
