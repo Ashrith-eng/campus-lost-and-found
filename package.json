@@ -1,0 +1,12 @@
+{
+  "name": "campus-lost-and-found",
+  "version": "1.0.0",
+  "description": "Campus Lost & Found Portal — post, search, and claim lost/found items.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
