@@ -40,6 +40,11 @@ function renderItems(items) {
   items.forEach((item) => {
     const card = document.createElement('article');
     card.className = `card ${item.type}`;
+    card.dataset.id = item.id;
+
+    const actionHtml = item.status === 'claimed'
+      ? '<button class="claim-btn" type="button" disabled>Claimed</button>'
+      : '<button class="claim-btn" type="button">Mark as claimed</button>';
 
     card.innerHTML = `
       <div class="card-top">
@@ -50,7 +55,7 @@ function renderItems(items) {
       <p class="meta">Location: ${item.location}</p>
       <p class="meta">Date: ${formatDate(item.date)}</p>
       <p class="meta">Contact: ${item.contactName} — ${item.contactInfo}</p>
-      <button class="claim-btn" type="button">Mark as claimed</button>
+      ${actionHtml}
     `;
 
     resultsEl.appendChild(card);
@@ -96,6 +101,15 @@ searchInputEl.addEventListener('input', () => {
 });
 
 showClaimedEl.addEventListener('change', loadItems);
+
+resultsEl.addEventListener('click', async (event) => {
+  const button = event.target.closest('.claim-btn');
+  if (!button || button.disabled) return;
+
+  const card = button.closest('.card');
+  await fetch(`/api/items/${card.dataset.id}`, { method: 'PATCH' });
+  loadItems();
+});
 
 function openModal() {
   formError.classList.add('hidden');

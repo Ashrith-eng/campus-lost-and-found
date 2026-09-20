@@ -279,3 +279,8 @@ main {
   cursor: pointer;
   font-weight: 600;
 }
+
+.card .claim-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
