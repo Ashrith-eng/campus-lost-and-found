@@ -98,6 +98,15 @@ main {
   padding: 3rem 1rem;
 }
 
+.banner {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
 .hidden {
   display: none;
 }
@@ -283,4 +292,24 @@ main {
 .card .claim-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .filter-bar input[type="text"] {
+    min-width: 100%;
+  }
 }

@@ -10,12 +10,22 @@ const closeModalBtn = document.getElementById('closeModalBtn');
 const cancelFormBtn = document.getElementById('cancelFormBtn');
 const postForm = document.getElementById('postForm');
 const formError = document.getElementById('formError');
+const bannerEl = document.getElementById('banner');
 
 const filters = {
   type: '',
   category: '',
   q: '',
 };
+
+function showBanner(message) {
+  bannerEl.textContent = message;
+  bannerEl.classList.remove('hidden');
+}
+
+function hideBanner() {
+  bannerEl.classList.add('hidden');
+}
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -70,9 +80,19 @@ async function loadItems() {
   if (filters.q) params.set('q', filters.q);
   if (!showClaimedEl.checked) params.set('status', 'open');
 
-  const response = await fetch(`/api/items?${params.toString()}`);
-  const items = await response.json();
-  renderItems(items);
+  resultsEl.innerHTML = '<p class="empty-state">Loading items...</p>';
+
+  try {
+    const response = await fetch(`/api/items?${params.toString()}`);
+    if (!response.ok) throw new Error('Request failed');
+
+    const items = await response.json();
+    hideBanner();
+    renderItems(items);
+  } catch (err) {
+    resultsEl.innerHTML = '';
+    showBanner("Couldn't load items. Is the server running?");
+  }
 }
 
 typeToggleEl.addEventListener('click', (event) => {
@@ -107,8 +127,14 @@ resultsEl.addEventListener('click', async (event) => {
   if (!button || button.disabled) return;
 
   const card = button.closest('.card');
-  await fetch(`/api/items/${card.dataset.id}`, { method: 'PATCH' });
-  loadItems();
+
+  try {
+    const response = await fetch(`/api/items/${card.dataset.id}`, { method: 'PATCH' });
+    if (!response.ok) throw new Error('Request failed');
+    loadItems();
+  } catch (err) {
+    showBanner("Couldn't update that item. Please try again.");
+  }
 });
 
 function openModal() {
@@ -145,21 +171,26 @@ postForm.addEventListener('submit', async (event) => {
     imageUrl: document.getElementById('formImageUrl').value.trim() || null,
   };
 
-  const response = await fetch('/api/items', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newItem),
-  });
+  try {
+    const response = await fetch('/api/items', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newItem),
+    });
 
-  if (!response.ok) {
-    const body = await response.json();
-    formError.textContent = body.error || 'Something went wrong. Please try again.';
+    if (!response.ok) {
+      const body = await response.json();
+      formError.textContent = body.error || 'Something went wrong. Please try again.';
+      formError.classList.remove('hidden');
+      return;
+    }
+
+    closeModal();
+    loadItems();
+  } catch (err) {
+    formError.textContent = "Couldn't reach the server. Please try again.";
     formError.classList.remove('hidden');
-    return;
   }
-
-  closeModal();
-  loadItems();
 });
 
 loadItems();
