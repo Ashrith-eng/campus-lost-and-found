@@ -29,7 +29,7 @@ Then open `http://localhost:3000`.
 
 ## Deployment
 
-Live at: **TODO — add the Render URL here once deployed.**
+Live at: **https://campus-lost-and-found-r8jx.onrender.com**
 
 Hosted on [Render](https://render.com)'s free tier, deploying straight from
 this repo (`npm install` as the build command, `npm start` to run it).
