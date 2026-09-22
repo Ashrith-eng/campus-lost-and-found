@@ -41,8 +41,8 @@ Out of scope for v1, but worth considering later:
 
 - Authentication and user accounts, so only the original poster can mark
   their own item as claimed.
-- A real database instead of a JSON file, for concurrent writes at scale.
-- Image upload for items (v1 only supports an optional image URL).
+- A real database instead of a JSON file, for concurrent writes at scale
+  and to avoid storing photos as base64 text inside it.
 - Email or push notifications when a matching item is posted.
 - Admin moderation for spam or duplicate posts.
 - Deployment to a hosting platform.

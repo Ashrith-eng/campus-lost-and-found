@@ -10,7 +10,7 @@
     "contactName": "Rahul Varma",
     "contactInfo": "rahul.varma@student.nitw.ac.in",
     "imageUrl": null,
-    "status": "open",
+    "status": "claimed",
     "createdAt": "2026-09-15T09:20:00.000Z"
   },
   {
@@ -24,7 +24,7 @@
     "contactName": "Ananya Reddy",
     "contactInfo": "9876543210",
     "imageUrl": null,
-    "status": "open",
+    "status": "claimed",
     "createdAt": "2026-09-16T18:05:00.000Z"
   },
   {
@@ -80,7 +80,7 @@
     "contactName": "Arjun Nair",
     "contactInfo": "9123456780",
     "imageUrl": null,
-    "status": "open",
+    "status": "claimed",
     "createdAt": "2026-09-18T20:10:00.000Z"
   },
   {
@@ -110,5 +110,19 @@
     "imageUrl": null,
     "status": "claimed",
     "createdAt": "2026-09-10T10:00:00.000Z"
+  },
+  {
+    "id": "fd8e29fa-3f5b-4ef7-97ac-4ac86687138b",
+    "type": "lost",
+    "title": "room keys",
+    "description": "room keys with radha krishna key chain",
+    "category": "keys",
+    "location": "1K hostel",
+    "date": "2026-09-22",
+    "contactName": "ashrith",
+    "contactInfo": "7989805189",
+    "imageUrl": null,
+    "status": "open",
+    "createdAt": "2026-09-22T05:38:11.665Z"
   }
 ]

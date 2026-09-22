@@ -9,7 +9,7 @@ const VALID_TYPES = ['lost', 'found'];
 const VALID_CATEGORIES = ['electronics', 'documents', 'keys', 'clothing', 'books', 'other'];
 const REQUIRED_FIELDS = ['type', 'title', 'description', 'category', 'location', 'date', 'contactName', 'contactInfo'];
 
-app.use(express.json());
+app.use(express.json({ limit: '8mb' }));
 app.use(express.static('public'));
 
 app.get('/api/items', (req, res) => {
@@ -45,6 +45,9 @@ app.post('/api/items', (req, res) => {
   }
   if (!VALID_CATEGORIES.includes(body.category)) {
     return res.status(400).json({ error: `category must be one of: ${VALID_CATEGORIES.join(', ')}` });
+  }
+  if (body.imageUrl && !body.imageUrl.startsWith('data:image/')) {
+    return res.status(400).json({ error: 'imageUrl must be a data:image/... URI' });
   }
 
   const newItem = {

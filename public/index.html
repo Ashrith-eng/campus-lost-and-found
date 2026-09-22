@@ -106,9 +106,14 @@
         </div>
 
         <label>
-          Image URL (optional)
-          <input type="url" id="formImageUrl" placeholder="https://...">
+          Photo (optional)
+          <input type="file" id="formImage" accept="image/*" capture="environment">
         </label>
+
+        <div id="imagePreviewWrap" class="image-preview-wrap hidden">
+          <img id="imagePreview" class="image-preview" alt="Selected photo preview">
+          <button type="button" id="removeImageBtn" class="remove-image-btn">Remove photo</button>
+        </div>
 
         <p id="formError" class="form-error hidden"></p>
 

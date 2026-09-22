@@ -12,11 +12,47 @@ const postForm = document.getElementById('postForm');
 const formError = document.getElementById('formError');
 const bannerEl = document.getElementById('banner');
 
+const formImageEl = document.getElementById('formImage');
+const imagePreviewWrap = document.getElementById('imagePreviewWrap');
+const imagePreview = document.getElementById('imagePreview');
+const removeImageBtn = document.getElementById('removeImageBtn');
+
 const filters = {
   type: '',
   category: '',
   q: '',
 };
+
+let selectedImageData = null;
+const MAX_IMAGE_DIMENSION = 1000;
+
+function compressImageFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const scale = Math.min(1, MAX_IMAGE_DIMENSION / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function clearSelectedImage() {
+  selectedImageData = null;
+  formImageEl.value = '';
+  imagePreview.src = '';
+  imagePreviewWrap.classList.add('hidden');
+}
 
 function showBanner(message) {
   bannerEl.textContent = message;
@@ -56,7 +92,12 @@ function renderItems(items) {
       ? '<button class="claim-btn" type="button" disabled>Claimed</button>'
       : '<button class="claim-btn" type="button">Mark as claimed</button>';
 
+    const photoHtml = item.imageUrl
+      ? `<img class="card-photo" src="${item.imageUrl}" alt="${item.title}">`
+      : '';
+
     card.innerHTML = `
+      ${photoHtml}
       <div class="card-top">
         <span class="badge ${item.type}">${item.type}</span>
         <span class="category">${capitalize(item.category)}</span>
@@ -140,6 +181,7 @@ resultsEl.addEventListener('click', async (event) => {
 function openModal() {
   formError.classList.add('hidden');
   postForm.reset();
+  clearSelectedImage();
   document.getElementById('formDate').value = new Date().toISOString().slice(0, 10);
   postModal.classList.remove('hidden');
 }
@@ -155,6 +197,17 @@ postModal.addEventListener('click', (event) => {
   if (event.target === postModal) closeModal();
 });
 
+formImageEl.addEventListener('change', async () => {
+  const file = formImageEl.files[0];
+  if (!file) return;
+
+  selectedImageData = await compressImageFile(file);
+  imagePreview.src = selectedImageData;
+  imagePreviewWrap.classList.remove('hidden');
+});
+
+removeImageBtn.addEventListener('click', clearSelectedImage);
+
 postForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   formError.classList.add('hidden');
@@ -168,7 +221,7 @@ postForm.addEventListener('submit', async (event) => {
     date: document.getElementById('formDate').value,
     contactName: document.getElementById('formContactName').value.trim(),
     contactInfo: document.getElementById('formContactInfo').value.trim(),
-    imageUrl: document.getElementById('formImageUrl').value.trim() || null,
+    imageUrl: selectedImageData,
   };
 
   try {

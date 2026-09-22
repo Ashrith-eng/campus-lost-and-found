@@ -19,7 +19,9 @@ can search, the person who posted marks it claimed.
 - Backend: Node.js + Express.
 - Storage: a JSON file on disk (`data/items.json`), read/written with `fs`.
   No database.
-- No image uploads in v1. Items can carry an optional image URL.
+- Items can carry an optional photo, captured via the device camera or a
+  file picker, stored as a base64 data URI directly in `items.json` (no
+  separate upload route or file storage).
 
 Reason for these constraints: this is a portfolio project that has to be
 explained end to end in an interview. Every line needs to be something the
@@ -40,7 +42,7 @@ One entity: `item`.
   date:        string   // ISO date the item was lost or found
   contactName: string
   contactInfo: string   // email or phone
-  imageUrl:    string | null
+  imageUrl:    string | null   // base64 data:image/... URI, or null
   status:      "open" | "claimed"
   createdAt:   string   // ISO timestamp
 }
@@ -63,8 +65,9 @@ Single page, no router.
 - Header with the app name and a "Post an item" button.
 - Filter bar: Lost / Found / All toggle, category dropdown, search box, and a
   checkbox to show claimed items (hidden by default).
-- Results as a responsive card grid. Each card shows type badge, title,
-  category, location, date, contact, and a "Mark as claimed" button.
+- Results as a responsive card grid. Each card shows the photo (if any),
+  type badge, title, category, location, date, contact, and a "Mark as
+  claimed" button.
 - Post form: a modal or a section that slides open. Client-side validation
   before it hits the API.
 - Empty state when no items match the filters.
@@ -93,9 +96,9 @@ Do not jump ahead. Each step must run before the next one starts.
 
 ## Out of scope for v1
 
-Authentication, user accounts, a real database, file/image upload, email
-notifications, admin moderation, deployment. Note them in the README as
-"possible next steps" instead of building them.
+Authentication, user accounts, a real database, email notifications, admin
+moderation, deployment. Note them in the README as "possible next steps"
+instead of building them.
 
 ## Definition of done for v1
 
