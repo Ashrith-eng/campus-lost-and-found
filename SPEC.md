@@ -97,8 +97,13 @@ Do not jump ahead. Each step must run before the next one starts.
 ## Out of scope for v1
 
 Authentication, user accounts, a real database, email notifications, admin
-moderation, deployment. Note them in the README as "possible next steps"
-instead of building them.
+moderation. Note them in the README as "possible next steps" instead of
+building them.
+
+The app is deployed on Render's free tier (see README for the URL). Since
+there's no persistent disk on that tier, `data/items.json` resets to the
+seed data on restarts/redeploys — a known, documented limitation rather
+than a bug.
 
 ## Definition of done for v1
 

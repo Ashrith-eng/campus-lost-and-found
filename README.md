@@ -27,6 +27,21 @@ node server.js
 
 Then open `http://localhost:3000`.
 
+## Deployment
+
+Live at: **TODO — add the Render URL here once deployed.**
+
+Hosted on [Render](https://render.com)'s free tier, deploying straight from
+this repo (`npm install` as the build command, `npm start` to run it).
+Since the free tier has no persistent disk, `data/items.json` resets back
+to the seed data whenever the service restarts or redeploys — item posts
+and claims made on the live site won't survive that. This is a known
+tradeoff of keeping storage as a plain JSON file (see "Possible next steps"
+below), not a bug.
+
+Free-tier services also spin down after periods of inactivity, so the
+first request after a while can take 30–60 seconds to wake it back up.
+
 ## API
 
 | Method | Path              | Purpose |
@@ -45,4 +60,3 @@ Out of scope for v1, but worth considering later:
   and to avoid storing photos as base64 text inside it.
 - Email or push notifications when a matching item is posted.
 - Admin moderation for spam or duplicate posts.
-- Deployment to a hosting platform.

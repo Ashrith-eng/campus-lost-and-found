@@ -3,7 +3,7 @@ const express = require('express');
 const { readItems, writeItems } = require('./data/store');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const VALID_TYPES = ['lost', 'found'];
 const VALID_CATEGORIES = ['electronics', 'documents', 'keys', 'clothing', 'books', 'other'];
